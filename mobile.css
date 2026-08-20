@@ -1,0 +1,42 @@
+/* Mobile / phone layout - written mobile-first: the base rules below
+   target a small phone screen first. The media queries only ADD
+   breathing room for bigger phones - it never switches to the
+   side-by-side desktop layout, that's what the PC version is for. */
+
+body {
+  max-width: 30rem;
+  padding: 1.75rem 1.25rem;
+}
+
+header.card { margin-bottom: 4rem; }
+header.card h1 { font-size: 1.5rem; }
+
+.text.card { padding: 1.75rem 1.5rem; }
+
+.project { margin: 0 0 6rem; }
+.project-main { margin-bottom: 3.5rem; }
+.project-main figure { margin-bottom: 2rem; }
+
+.process { margin-top: 0.5rem; }
+.process-hint { margin-bottom: 1.75rem; }
+
+.slide-grid { gap: 1rem; margin-bottom: 2rem; }
+.slideshow { padding: 1.5rem 2.5rem; }
+
+.case-study-btn,
+.btn { margin-top: 2rem; }
+
+.site-footer { margin-top: 5rem; }
+
+/* a bit more breathing room on bigger phones */
+@media (min-width: 26rem) {
+  body { padding: 2rem 1.5rem; }
+  header.card h1 { font-size: 1.75rem; }
+  .card { padding: 2rem 1.75rem; }
+}
+
+/* large phones / small tablets held in portrait */
+@media (min-width: 36rem) {
+  .slideshow { padding: 1.75rem 3.25rem; }
+  .slide img, .slide video { max-height: 26rem; }
+}

@@ -1,0 +1,5 @@
+Model provider: Anthropic 
+Sonnet 5
+Cloude Code 
+
+Session in: silva_hw2_session-export folder. 

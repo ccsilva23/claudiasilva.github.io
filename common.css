@@ -1,0 +1,372 @@
+/* Shared base for every page: palette (light + dark), typography, the
+   "card + depth square" component, nav/footer, and the process
+   grid + slideshow.
+   Mobile-first: everything below is written for a single-column phone
+   layout by default. desktop.css / mobile.css only ADD to this with
+   min-width media queries - nothing here assumes a wide screen. */
+
+/* ---- light palette (default) ------------------------------------- */
+:root {
+  --bg:            #eef4fc;
+  --ink:           #10203f;
+  --ink-soft:      #3a5a96;
+
+  --card-header:   #dbe7fb;
+  --accent-header: #9db8e8;
+
+  --card-crew:     #d3e3fa;
+  --accent-crew:   #86ade6;
+
+  --card-nexp:     #cbdcf7;
+  --accent-nexp:   #6f9fe0;
+
+  --card-saysmt:   #c3d6f4;
+  --accent-saysmt: #5f8fd6;
+
+  --panel:         #e4edfb;
+  --panel-border:  #b9cdf0;
+  --btn:           #2853a6;
+  --btn-hover:     #1f3f82;
+  --ring:          #5b82c4;
+  --on-accent:     #ffffff;
+}
+
+/* ---- dark palette: its own chosen colors, not an inversion of the
+   light set - swapped in automatically for users whose system prefers
+   dark, unless they've explicitly picked "light" with the toggle --- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:            #050336;
+    --ink:           #ffffff;
+    --ink-soft:      #b9c4f0;
+
+    --card-header:   #101046;
+    --accent-header: #2541a8;
+
+    --card-crew:     #0b2154;
+    --accent-crew:   #1c5fc9;
+
+    --card-nexp:     #0a2a5e;
+    --accent-nexp:   #2f74d6;
+
+    --card-saysmt:   #113a6b;
+    --accent-saysmt: #1f6fb0;
+
+    --panel:         #0a0850;
+    --panel-border:  #23206e;
+    --btn:           #1b1870;
+    --btn-hover:     #262299;
+    --ring:          #3a6ea5;
+    --on-accent:     #ffffff;
+  }
+}
+
+/* explicit toggle wins over system preference in both directions */
+:root[data-theme="dark"] {
+  --bg:            #050336;
+  --ink:           #ffffff;
+  --ink-soft:      #b9c4f0;
+
+  --card-header:   #101046;
+  --accent-header: #2541a8;
+
+  --card-crew:     #0b2154;
+  --accent-crew:   #1c5fc9;
+
+  --card-nexp:     #0a2a5e;
+  --accent-nexp:   #2f74d6;
+
+  --card-saysmt:   #113a6b;
+  --accent-saysmt: #1f6fb0;
+
+  --panel:         #0a0850;
+  --panel-border:  #23206e;
+  --btn:           #1b1870;
+  --btn-hover:     #262299;
+  --ring:          #3a6ea5;
+  --on-accent:     #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--bg);
+  margin: 0 auto;
+  padding: 1.25rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+h1, h2, h3 {
+  font-family: "Stencil Std", "Stencil", "Copperplate", fantasy;
+  color: var(--ink);
+}
+
+a { color: inherit; }
+
+/* --- site nav ------------------------------------------------------- */
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.site-name {
+  font-family: "Stencil Std", "Stencil", "Copperplate", fantasy;
+  font-size: 1.15rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.site-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.site-nav-links a {
+  text-decoration: none;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+.site-nav-links a:hover { color: var(--ink); }
+
+.theme-toggle {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  background: none;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.theme-toggle:hover { border-color: var(--ring); }
+
+/* --- quiet footer ----------------------------------------------------*/
+.site-footer {
+  margin: 4rem 0 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--panel-border);
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  text-align: center;
+}
+.site-footer p { margin: 0.15rem 0; }
+.site-footer a { color: var(--ink-soft); }
+
+/* --- depth-square card component ---------------------------------- */
+/* A solid color block sits behind the text, and a second, different
+   blue square peeks out from underneath it, so the text reads as a
+   raised layer against the page background. */
+.card {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0.5rem;
+  margin: 0 0 0.25rem;
+  transition: background-color 0.2s ease;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0.6rem;
+  left: 0.6rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+/* hero: at least double the card padding, more room to breathe */
+header.card {
+  padding: 3rem 2rem;
+  margin: 0.5rem 0 3rem;
+  background: var(--card-header);
+}
+header.card::before { background: var(--accent-header); }
+header.card h1 { margin: 0; }
+header.card p { color: var(--ink-soft); margin: 0.5rem 0 0; }
+
+.project:nth-of-type(1) .text.card { background: var(--card-crew); }
+.project:nth-of-type(1) .text.card::before { background: var(--accent-crew); }
+
+.project:nth-of-type(2) .text.card { background: var(--card-nexp); }
+.project:nth-of-type(2) .text.card::before { background: var(--accent-nexp); }
+
+.project:nth-of-type(3) .text.card { background: var(--card-saysmt); }
+.project:nth-of-type(3) .text.card::before { background: var(--accent-saysmt); }
+
+.project h2 { margin: 0 0 0.25rem; }
+.project .meta { color: var(--ink-soft); font-size: 0.9rem; margin: 0 0 1rem; }
+
+/* mobile-first default: figure stacked above its text, full width,
+   with real breathing room before the process section underneath */
+.project-main { margin-bottom: 3rem; }
+.project-main figure { margin: 0 0 1.75rem; }
+
+/* --- media -----------------------------------------------------------*/
+.project { margin: 0 0 7rem; }
+figure { margin: 1.5rem 0; }
+img, video { max-width: 100%; display: block; }
+figcaption { color: var(--ink-soft); font-size: 0.85rem; margin-top: 0.4rem; }
+
+/* --- process: grid overview + detail slideshow ------------------------
+   The grid is built from the slideshow's own .slide elements by
+   common.js, so there's one source of truth for media + captions. The
+   grid is for a quick scan; the slideshow underneath is for a closer
+   look, since almost nobody actually clicks prev/next arrows. */
+.process { margin: 0 0 7rem; }
+.process h3 { margin: 0 0 0.4rem; }
+.process-hint { color: var(--ink-soft); font-size: 0.85rem; margin: 0 0 1rem; }
+
+.slide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.75rem;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem;
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
+  border-radius: 0.4rem;
+  cursor: pointer;
+  color: var(--ink);
+  font: inherit;
+  text-align: center;
+}
+.grid-item:hover,
+.grid-item:focus-visible { border-color: var(--ring); }
+.grid-item[aria-current="true"] { border-color: var(--ring); border-width: 2px; }
+
+.grid-item img {
+  width: 100%;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 0.3rem;
+  display: block;
+  pointer-events: none;
+}
+
+.grid-icon {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  background: var(--btn);
+  color: var(--on-accent);
+  border-radius: 0.3rem;
+}
+
+.grid-caption {
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  line-height: 1.25;
+}
+
+/* process-of-creation slideshow: supports any file type (image, video,
+   audio, or a plain file link) since it only ever shows/hides a .slide
+   wrapper - it never inspects what's inside. */
+.slideshow {
+  position: relative;
+  padding: 1.5rem 3.25rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.slideshow .slides { position: relative; }
+
+.slide { display: none; text-align: center; }
+.slide.is-active { display: block; }
+
+.slide img,
+.slide video {
+  max-width: 100%;
+  max-height: 22rem;
+  margin: 0 auto;
+  display: block;
+  border-radius: 0.25rem;
+}
+
+.slide audio { width: 100%; }
+
+.slide .file-link {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  color: var(--on-accent);
+  background: var(--btn);
+  border-radius: 0.25rem;
+  text-decoration: none;
+}
+.slide .file-link:hover { background: var(--btn-hover); }
+
+.slide-caption {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  margin: 0.75rem 0 0;
+}
+
+.slide-prev,
+.slide-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--ring);
+  border-radius: 50%;
+  background: var(--btn);
+  color: var(--on-accent);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.slide-prev:hover,
+.slide-next:hover { background: var(--btn-hover); }
+
+.slide-prev { left: 0.5rem; }
+.slide-next { right: 0.5rem; }
+
+.slide-counter {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  margin: 1rem 0 0;
+}
+
+.case-study-btn,
+.btn {
+  display: inline-block;
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.35rem;
+  background: var(--btn);
+  color: var(--on-accent);
+  text-decoration: none;
+  border-radius: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.case-study-btn:hover,
+.btn:hover { background: var(--btn-hover); }

@@ -1,0 +1,37 @@
+/* Case study pages: same nav/footer/card system as the rest of the
+   site, just a simpler single-column read. */
+
+.case-back {
+  display: inline-block;
+  margin: 0 0 1.5rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.case-back:hover { color: var(--ink); }
+
+.case-meta {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  margin: 0 0 2.5rem;
+}
+
+.case-section {
+  margin: 0 0 2rem;
+  padding: 1.5rem 1.75rem;
+  border-radius: 0.5rem;
+}
+.case-section h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+  font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.case-section p { margin: 0; }
+
+.case-section:nth-of-type(1) { background: var(--card-header); }
+.case-section:nth-of-type(2) { background: var(--card-crew); }
+.case-section:nth-of-type(3) { background: var(--card-nexp); }
+.case-section:nth-of-type(4) { background: var(--card-saysmt); }

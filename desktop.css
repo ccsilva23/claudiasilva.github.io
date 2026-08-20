@@ -1,0 +1,29 @@
+/* Desktop / PC layout - builds on common.css's mobile-first base.
+   Below 48rem this page looks identical to the mobile version; above
+   it, the asymmetric big-media / short-text layout kicks in and
+   alternates sides project by project. */
+
+body { max-width: 64rem; }
+
+@media (min-width: 48rem) {
+  .project-main {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .project:nth-of-type(even) .project-main {
+    flex-direction: row-reverse;
+  }
+
+  .project-main figure {
+    flex: 3;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .project-main .text.card {
+    flex: 2;
+    min-width: 0;
+  }
+}

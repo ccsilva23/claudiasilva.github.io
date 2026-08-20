@@ -1,0 +1,54 @@
+/* Landing / gate page - mobile-first: buttons stack in one column by
+   default, and only sit side-by-side once there's room. */
+
+body.landing {
+  max-width: none;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-content {
+  max-width: 26rem;
+  width: 100%;
+  text-align: center;
+}
+
+.landing-intro {
+  color: var(--ink-soft);
+  margin: 0 0 1.5rem;
+}
+
+.landing-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.landing-btn {
+  display: block;
+  padding: 1.1rem 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+
+.landing-btn.mobile {
+  background: var(--card-crew);
+  border: 1px solid var(--accent-crew);
+}
+.landing-btn.mobile:hover { background: var(--accent-crew); }
+
+.landing-btn.desktop {
+  background: var(--card-nexp);
+  border: 1px solid var(--accent-nexp);
+}
+.landing-btn.desktop:hover { background: var(--accent-nexp); }
+
+@media (min-width: 30rem) {
+  .landing-buttons { flex-direction: row; }
+  .landing-btn { flex: 1; }
+}

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(command -v ffmpeg)",
+      "Bash(command -v magick)",
+      "Bash(command -v convert)",
+      "Bash(ffmpeg -version)",
+      "Bash(magick -version)",
+      "Bash(command -v python)",
+      "Bash(command -v python3)",
+      "Bash(command -v node)",
+      "Bash(command -v pip)",
+      "Bash(pip --version)"
+    ]
+  }
+}
